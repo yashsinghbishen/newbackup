@@ -1,0 +1,2 @@
+ssh -i "new_ezUAT.pem" ubuntu@ec2-54-251-219-95.ap-southeast-1.compute.amazonaws.com
+

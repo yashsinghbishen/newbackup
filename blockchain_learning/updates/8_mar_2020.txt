@@ -1,0 +1,25 @@
+Learning till 8th Mar 2021:
+    Blockchain:
+        - Blockchain is special database which is secure, anonymous, unanimous, time-stapmed, Immutable, Distributed.
+        - A type of DLT(Distributed Ledger Technology)
+        - Uses hash to map the blocks and PKI for verification
+    
+    Bitcoin concepts:
+        - Mining and miner
+        - Proof of work
+        - Incentive for mining winner and solving confilict for parallel winners
+        - Merkle Tree
+        - Payment verification
+        - Network
+
+    Possible attacks on bitcoin in future(with next gen techs):
+        - Race Attack
+        - Finney Attack
+        - The 51% Attack
+    
+    Ref:
+        - Blockchain Tutorial(https://www.tutorialspoint.com/blockchain/index.htm)
+        - Satoshi Nakamoto's papers (https://bitcoin.org/bitcoin.pdf)
+        - Blockchain Explained (https://www.investopedia.com/terms/b/blockchain.asp)
+        - Symmetric, asymmetric encryption, hasing (https://www.thesslstore.com/blog/difference-encryption-hashing-salting/)
+        - Digital Signature (https://us-cert.cisa.gov/ncas/tips/ST04-018)

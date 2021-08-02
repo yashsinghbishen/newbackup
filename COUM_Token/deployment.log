@@ -1,0 +1,90 @@
+avita@avita-NS14A8:~/thoughtwin/COUM_Token$ truffle migrate --network testnet
+Warning: Both truffle-config.js and truffle.js were found. Using truffle-config.js.
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+Warning: Both truffle-config.js and truffle.js were found. Using truffle-config.js.
+Warning: Both truffle-config.js and truffle.js were found. Using truffle-config.js.
+
+
+Starting migrations...
+======================
+> Network name:    'testnet'
+> Network id:      97
+> Block gas limit: 30000000 (0x1c9c380)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x952eb87587baa1923eb42664354cbd007d0cd4fab6b3b3f45031a76d2ee4c36e
+   > Blocks: 3            Seconds: 9
+   > contract address:    0xD3D9233b1A6250A35B2867db9644aDA74D021a1E
+   > block number:        8546765
+   > block timestamp:     1620130841
+   > account:             0x895EEcC6efD2B491da62126076EaCBE688BE855F
+   > balance:             6.24616114
+   > gas used:            191943 (0x2edc7)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00383886 ETH
+
+   Pausing for 10 confirmations...
+   -------------------------------
+   > confirmation number: 2 (block: 8546770)
+   > confirmation number: 3 (block: 8546771)
+   > confirmation number: 4 (block: 8546772)
+   > confirmation number: 5 (block: 8546773)
+   > confirmation number: 7 (block: 8546775)
+   > confirmation number: 8 (block: 8546776)
+   > confirmation number: 9 (block: 8546777)
+   > confirmation number: 11 (block: 8546779)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00383886 ETH
+
+
+2_deploy_coum.js
+================
+
+   Deploying 'BEP20Token'
+   ----------------------
+   > transaction hash:    0x57f0a9ef210b190a9c89eb70c5ae5e14e06fd9fe7d67af5be2eb42e0dc22b132
+   > Blocks: 3            Seconds: 9
+   > contract address:    0x6c4A165FfaC59d1B61538db7200163D4360C0d96
+   > block number:        8546786
+   > block timestamp:     1620130904
+   > account:             0x895EEcC6efD2B491da62126076EaCBE688BE855F
+   > balance:             6.21385194
+   > gas used:            1573122 (0x180102)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03146244 ETH
+
+   Pausing for 10 confirmations...
+   -------------------------------
+   > confirmation number: 1 (block: 8546789)
+   > confirmation number: 3 (block: 8546791)
+   > confirmation number: 4 (block: 8546792)
+   > confirmation number: 6 (block: 8546794)
+   > confirmation number: 8 (block: 8546796)
+   > confirmation number: 9 (block: 8546797)
+   > confirmation number: 11 (block: 8546799)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.03146244 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.0353013 ETH
+

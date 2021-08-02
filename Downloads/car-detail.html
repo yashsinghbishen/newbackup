@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {%block title%}<title>Exotics</title>{%endblock%}
+    {% load static %}
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel = "stylesheet"href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" > < /script> 
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js" > </script> 
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" > </script>
+    <script src = "//geodata.solutions/includes/countrystatecity.js" > </script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" > </script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" > </script>
+    <script src = "https://cdn.jsdelivr.net/bootstrap.tagsinput/0.8.0/bootstrap-tagsinput.min.js" > </script>
+    <script src = "https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" > </script> 
+    <script src = "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" > </script>
+
+    <link rel = "stylesheet"href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" >
+    <link rel = "preconnect"href = "https://fonts.gstatic.com" >
+    <link href = "https://fonts.googleapis.com/css2?family=Podkova:wght@400;500;600;700;800&display=swap"rel = "stylesheet" >
+    <link rel = "stylesheet"href = "{% static 'css/style.css' %}" >
+  
+</head>
+<body>
+     <div class="container container_header">
+      <div class="container container_header">
+       <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}" class="logo_img"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto submit_navbar">
+              <li>
+                <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'submit-vehicle'%}">Submit Vehicle</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'about'%}">About</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{%url 'contact-us'%}">Contact</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{%url 'sold-vehicles'%}">Sold Vehicles</a>
+              </li>
+            </ul>
+            
+                {%block userProfile%}
+                {% if user.is_authenticated%}
+
+                <span class="navbar-text profile_text profile_text1">
+                  <span class="submit_navabrusername" id="person">{{user.username}} 
+                  <img class="profile_imgdrop" src="{{photo}}" alt="profile ">
+                  </span>                        
+                   <ul class="profile_dropdown ">
+                    <li><a href="{%url 'watchlist' %}"><img src="{% static 'images/eye.png' %}">Watchlist</a></li>
+                    <li><a href="{%url 'my-listing' %}"><img src="{% static 'images/list.png' %}">My Listings</a></li>
+                    <li><a href="{%url 'setting' %}"><img src="{% static 'images/settings.png' %}">Settings</a></li>
+                    <li class="signout"><a href="{% url 'logout'%}">Sign Out</a></li>
+                     <div class="triangles">
+                        <div id="up-triangle"></div>
+                    </div>
+                    </ul>
+                  </span>
+                   {%else%} 
+                    <ul class="navbar-nav mr-auto menu_list">
+                      <li class="nav-item">
+                          <a class="nav-link" href="#myLoginModal" data-toggle="modal" data-target="#loginform">Login</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{% url 'register' %}" data-toggle="modal" data-target="#signupform">Sign Up</a>
+                      </li>
+                    </ul>
+                     {%endif%}
+                {%endblock%}  
+        </div>
+    </nav>
+  </div>
+
+<section class="submit_vehicle submit_info">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-12">
+                <div class="wizard">
+                    <div class="wizard-inner">
+                        <div class="connecting-line"></div>
+                          <ul class="nav nav-tabs" role="tablist">
+                              <li role="presentation"class="active" >
+                                  <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" aria-expanded="true"><span class="round-tab gray-1">1 </span> 
+                                    <p class="step-text">Vehicle Information</p>
+                                  </a>
+                              </li>
+                              <li role="presentation" class="">
+                                  <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" aria-expanded="false"><span class="round-tab gray-1">2</span>
+                                   <p class="step-text">Vehicle Photo</p>
+                                  </a>
+                              </li>
+                              <li role="presentation" class="">
+                                  <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab"><span class="round-tab gray-1">3</span> 
+                                   <p class="step-text">Vehicle Details </p>
+                                  </a>
+                              </li>
+                              <li role="presentation" class="">
+                                  <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab"><span class="round-tab gray-1">4</span> 
+                                   <p class="step-text">Personal Information</p>
+                                  </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <form id="carForm" class="info-box"  method="POST" enctype="multipart/form-data" action="/car-detail/">
+                    {%csrf_token%}
+                      <div class="tab-content" id="main_form">
+                          <div class="tab-pane active " role="tabpanel" id="step1">
+                            <h2 class="text-center">Vehicle Information</h2>
+                            <p class="rebuilt-para text-center"> Enter your details below</p>
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label>Vehicle Identificaiton Number (VIN)</label>
+                                <input type="text" class="form-control" name="vin" id="vin" value="" placeholder="5N12L3LD23993029430">
+                                <span id="result"></span>
+                            </div>
+                             <div class="col-md-6 form-group">
+                                <label>Body Type</label>
+                                <input type="text" class="form-control" name="type" id="body-type" placeholder="Sedan" >
+                            </div> 
+                            <div class="col-md-6 form-group">
+                                <label>Year</label>
+                                <select name="year" id="year" class="form-control" >
+                                    <option value="" class="option">choose</option>
+                                     
+                                </select>
+                                <i class="zmdi zmdi-caret-down"></i>
+                            </div>                         
+                            <div class="col-md-6 form-group">
+                                <label>Transmission</label>
+                                <input type="text" class="form-control" name="transmission" id="transmission" placeholder="4-Speed Automatic">
+                            </div>
+
+                            <div class="col-md-6 form-group">
+                                <label>Make</label>
+                                <select name="make" id="vehilce-make" class="form-control">
+                                    <option value="" class="option">choose</option>
+                                </select>
+                                <i class="zmdi zmdi-caret-down"></i>
+                                                  
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Engine</label>
+                                <input type="text" class="form-control" name="engine" id="engine">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Model</label>
+                                <input type="text" class="form-control" name="model" id="car-model" >
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>drive Type</label>
+                                <select name="drive_type" id="drive-type" class="form-control" >
+                                    <option value="" class="option">choose</option>
+                                    <option value="FWD" class="option">FWD</option>
+                                    <option value="RWD" class="option">RWD</option>
+                                    <option value="AWD" class="option">AWD</option>
+                                    <option value="4WD" class="option">4WD</option>
+                                    <option value="4X2" class="option">4X2</option>
+                                    <option value="Other" class="option">Other</option>
+                                </select>
+                                <i class="zmdi zmdi-caret-down"></i>                       
+                            </div>
+                             <div class="col-md-6 form-group">
+                                <label>trim/package</label>
+                                <input type="text" class="form-control" name="trim" id="trim" placeholder="Enter Details" >
+                            </div> 
+
+                            <div class="col-md-6 form-group">
+                                <label>Fuel Type</label>
+                                <select name="fuel_type" id="fuel-type" class="form-control">
+                                    <option value="" class="option">choose</option>
+                                    <option value="Gasoline" class="option">Gasoline</option>
+                                    <option value="Diesel" class="option">Diesel</option>
+                                    <option value="Electric" class="option">Electric</option>
+                                    <option value="Hybrid" class="option">Hybrid</option>
+                                    <option value="Gas/Electric Hybrid" class="option">Gas/Electric Hybrid</option>
+                                    <option value="Other" class="option">Other</option>                                
+                                </select>
+                            </div>
+
+
+                            <div class="col-md-12 line_div"></div>
+                            <div class="col-md-6 form-group">
+                                <label>Exterior Color</label>
+                                <select class="custom-select" id="lead-select">
+                                  <option value="" class="option">choose</option>
+                                  <option value="Red">Red</option>
+                                  <option value="Blue">Blue</option>
+                                  <option value="Green">Green</option>
+                                  <option value="Yellow">Yellow</option>
+                                  <option value="Purple">Purple</option>
+                                  <option value="Pink">Pink</option>
+                                  <option value="Orange">Orange</option>
+                                  <option value="Brown">Brown</option>
+                                  <option value="Black">Black</option>
+                                  <option value="White">White</option>
+                                  <option value="Gray">Gray</option>
+                                  <option value="Gold">Gold</option>
+                                  <option value="Silver">Silver</option>
+                                  <option value="Navy Blue">Navy Blue</option>
+                                  <option value="Sky Blue">Sky Blue</option>
+                                  <option value="Lime Green">Lime Green</option>
+                                  <option value="Teal">Teal</option>
+                                  <option value="Indigo">Indigo</option>
+                                  <option value="Magenta">Magenta</option>
+                                  <option value="Violet">Violet</option>
+                                  <option value="Khaki">Khaki</option>
+                                  <option value="Salmon">Salmon</option>
+                                  <option value="Crimson">Crimson</option>
+                                  <option value="Lavender">Lavender</option>
+                                  <option value="Plum">Plum</option>
+                                  <option value="Blue violet">Blue Violet</option>
+                                  <option value="Olive">Olive</option>
+                                  <option value="Cyan">Cyan</option>
+                                  <option value="Maroon">Maroon</option>
+                                  <option value="Beige">Beige</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>Interior Color</label>
+                                <select class="custom-select" id="lead-select">
+                                  <option value="" class="option">choose</option>
+                                  <option value="Red">Red</option>
+                                  <option value="Blue">Blue</option>
+                                  <option value="Green">Green</option>
+                                  <option value="Yellow">Yellow</option>
+                                  <option value="Purple">Purple</option>
+                                  <option value="Pink">Pink</option>
+                                  <option value="Orange">Orange</option>
+                                  <option value="Brown">Brown</option>
+                                  <option value="Black">Black</option>
+                                  <option value="White">White</option>
+                                  <option value="Gray">Gray</option>
+                                  <option value="Gold">Gold</option>
+                                  <option value="Silver">Silver</option>
+                                  <option value="Navy Blue">Navy Blue</option>
+                                  <option value="Sky Blue">Sky Blue</option>
+                                  <option value="Lime Green">Lime Green</option>
+                                  <option value="Teal">Teal</option>
+                                  <option value="Indigo">Indigo</option>
+                                  <option value="Magenta">Magenta</option>
+                                  <option value="Violet">Violet</option>
+                                  <option value="Khaki">Khaki</option>
+                                  <option value="Salmon">Salmon</option>
+                                  <option value="Crimson">Crimson</option>
+                                  <option value="Lavender">Lavender</option>
+                                  <option value="Plum">Plum</option>
+                                  <option value="Blue violet">Blue Violet</option>
+                                  <option value="Olive">Olive</option>
+                                  <option value="Cyan">Cyan</option>
+                                  <option value="Maroon">Maroon</option>
+                                  <option value="Beige">Beige</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                            <label for="">
+                            Vechile's Title *
+                            </label>
+                                <select name="title" id="title" class="form-control">
+                                    <option value="" class="option">choose</option>
+                                    <option value="Clean" class="option">Clean</option>
+                                    <option value="Rebuilt" class="option">Rebuilt</option>
+                                    <option value="Salvage" class="option">Salvage</option>
+                                    <option value="Branded" class="option">Branded</option>
+                                    <option value="Other" class="option">Other</option>
+                                </select>
+                            </div> 
+                             <div class="col-md-6 form-group">
+                                <label>Current Miles/Kilometers</label>
+                                <input type="text" class="form-control" name="current_miles" id="current-miles" placeholder="Enter Details" >
+                            </div> 
+                             <div class="col-md-6 form-group">
+                                <label>Asking Price</label>
+                                <input type="text" class="form-control" name="asking_price" id="asking-price" placeholder="Enter Details" >
+                            </div> 
+                            <div class="col-md-6 user-info-form">
+                                <div class="form-group">
+                                    <label class="text-none">Price Negotiable?</label> 
+                                      <div class="d-block mt-2">
+                                        <label class="switch">
+                                          <input class="switch-input" type="checkbox" >
+                                          <span class="switch-label" data-on="1" data-off="2+"></span> 
+                                          <span class="switch-handle"></span>
+                                          <div class="toggle-btn">
+                                            <span>Yes</span>
+                                            <span>No</span>
+                                          </div>
+                                        </label>
+                                      </div>
+                                </div>
+                            </div>
+                            <div class="setting_button col-md-12 pl-2 pr-2">
+                                <a class="btn btn-primary btnNext update_btn continue_btn" >Next</a>
+                                
+                            </div>
+                        </div>
+                                  
+                          </div>
+                          <div class="tab-pane" role="tabpanel" id="step2">
+                              <h2 class="text-center">Vehicle Photos</h2>
+                              <p class="rebuilt-para text-center mb-0"> Upload your photos below</p>
+                              {% comment %} <p class=" photo-text">If vehicle images are incosistent with other information you provide, it may impact the accuracy of the Offer. </p> {% endcomment %}
+                            <!-- drag and drop -->
+                        <div class="row">
+                            <div class="drag_wrapper col-md-7">
+                              <div class="drop">
+                                <div class="cont">
+                                  <i class="fa fa-cloud-upload"></i>
+                                  <div class="tit pb-2">
+                                   Drag and drop an image
+                                  </div>
+                                  <!-- <div class="desc">
+                                    or browse to choose file 
+                                  </div> -->
+                                  <div class="browse pb-2">
+                                    or <span class="blue">browse</span> to choose file 
+                                  </div>
+                                  <p>(Up to 24 images)</p>
+                                </div>
+                               <input id="files" multiple="true" name="files[]" type="file" />
+                              </div>
+                            </div>
+                            <div class="col-md-5 right-section">
+                                <div class="youtube_div">
+                                    <p>please provide any links to videos of the vehicle <br>
+                                    <span>(youtube or Vimeo)</span></p>
+                                </div>
+                                <div class="bg-white">
+                                    <input type="text" value="" data-role="tagsinput" placeholder="Add your link here" />
+                                </div>
+                            </div>
+
+                            <!--  -->
+                            <div class="col-md-12 upload-btn-wrapper" id="images">
+                                <div class="bg-box mt-4">
+                                   <div class="row drag_imglist">
+                                    <output id="list">
+                                            <!-- <div class="hover_box"><img src="images/trash.png"></div> -->
+                                    </output>
+                                      
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="setting_button col-md-12 pl-2 pr-2">
+				 <a class="btn btn-primary btnNext update_btn continue_btn" >Next</a>
+				 <a class="btn  delete_btn cancel_btn btn-primary btnPrevious" >Previous</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <h2 class="text-center">Vehicle Details</h2>
+                            <p class="rebuilt-para text-center mb-0"> Enter your details below</p>
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label>did the vehicle have any kind of repairs?</label>
+                                    <select class="custom-select" id="lead-select">
+                                      <option selected>Select</option>
+                                      <option value="1">Yes</option>
+                                      <option value="2">No</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>specify any upgrade (exterior mods, aftermarket audio, performance, suspension, exhaust, etc.) please be specific and separate each item by a comma ‘,.”</label>
+                                    <textarea class="form-control mb-4">Enter Details</textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>any recent service/maintenance details you can provide? (please be specific and separate each item by a comma‘,.”)</label>
+                                    <textarea class="form-control mb-4">Enter Details</textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>known flaws (please be specific and separate each item by a comma‘,.”)</label>
+                                    <textarea class="form-control mb-4">Enter Details</textarea>
+                                </div>
+                                <div class="col-md-12">
+                                    <label>please provide any further info or insight about the vehicle (features, ownership history, purchasing details, financing options, included items, etc.)</label>
+                                    <textarea class="form-control mb-5">Enter Details</textarea>
+                                </div>
+                            </div>
+                            <div class="setting_button col-md-12 pl-2 pr-2">
+ 				<a class="btn btn-primary btnNext update_btn continue_btn" >Next</a>
+        			<a class="btn  delete_btn cancel_btn btn-primary btnPrevious" >Previous</a>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane" role="tabpanel" id="step4">
+                            <h2 class="text-center">Personal Information</h2>
+                            <p class="rebuilt-para text-center mb-0"> Enter your details below</p>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>your name</label>
+                                    <input type="" name="" class="form-control" placeholder="Enter Details">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Phone number </label>
+                                    <input type="" name="" class="form-control" placeholder="+91 98765 43210">
+                                </div>
+                                <div class="col-md-6 user-info-form">
+                                    <div class="form-group">
+                                        <label class="text-none">Hide Name and contact</label> 
+                                          <div class="d-block mt-2">
+                                            <label class="switch">
+                                              <input class="switch-input" type="checkbox" >
+                                              <span class="switch-label" data-on="1" data-off="2+"></span> 
+                                              <span class="switch-handle"></span>
+                                              <div class="toggle-btn">
+                                                <span>Yes</span>
+                                                <span>No</span>
+                                              </div>
+                                            </label>
+                                          </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>current location of vehicle? </label>
+                                    <select name="country" class="countries form-control" id="countryId">
+                                        <option value="">Select Country</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>state </label>
+                                    <select name="state" class="states form-control" id="stateId">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>city </label>
+                                    <select name="city" class="cities form-control" id="cityId">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>zipcode </label>
+                                    <input type="" name="" class="form-control" placeholder="Enter Details">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>type of seller</label>
+                                    <select class="custom-select" id="lead-select">
+                                      <option selected>Choose your option</option>
+                                      <option value="Dealer">Dealer</option>
+                                      <option value="Private">Private</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-5">
+                                <div class="form-check col-md-6 ml-3">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label text-capitalize" for="exampleCheck1">accept terms and services</label>
+                                </div>
+                            </div>
+                            <div class="setting_button col-md-12 pl-2 pr-2">
+ 				<a class="btn btn-primary btnNext update_btn continue_btn" >Next</a>
+        			<a class="btn  delete_btn cancel_btn btn-primary btnPrevious" >Previous</a>
+                            </div>
+                        </div>                      
+                  </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+<section class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <img src="{% static 'images/footer.png' %}" class="footer-logo">
+            </div>
+            <div class="col-md-3 col-12">
+                <p>Overview</p>
+                <ul>
+                    <li>About us</li>
+                    <li>FAQs</li>
+                    <li>Privacy Policy</li>
+                    <li>Terms & Conditions</li>   
+                </ul>
+            </div>
+            <div class="col-md-3 col-12">
+                <p>Others</p>
+                <ul>
+                    <li>Advertise with Us</li>
+                    <li>Careers</li>
+                    <li>Customer Care</li> 
+                </ul>
+            </div>
+            <div class="col-md-3 col-12">
+                <p>Connect with us</p>
+                <ul>
+                    <li><img src="{% static 'images/email.png' %}">info@inpublic.com</li>
+                    <li><img src="{% static 'images/phone.png' %}">+1 949. 387. 5255</li>
+                    <li><img src="{% static 'images/address.png' %}">47 Discovery, Irvine CA 92620</li> 
+                </ul>
+            </div>
+        </div>
+        <div class="row copyright_container">
+            <div class="col-md-6 col-12">
+                <p class="copyrightdiv">© Copyright Inpublic 2020</p>
+            </div>
+            <div class="col-md-6 col-12 footericondiv">
+                <ul>
+                    <li><i class="fa fa-twitter"></i></li>
+                    <li><i class="fa fa-facebook-f"></i></li>
+                    <li><i class="fa fa-linkedin"></i></li>
+                    <li><i class="fa fa-behance"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+   
+
+<script>
+    $(document).ready(function(){
+      $("#person").click(function(){
+        $(".profile_dropdown").toggle();
+      });
+    });
+
+//----------------- drag and drop js---------------//
+var drop = $("input");
+drop.on('dragenter', function (e) {
+  $(".drop").css({
+    "border": "4px dashed #09f",
+    "background": "rgba(0, 153, 255, .05)"
+  });
+  $(".cont").css({
+    "color": "#09f"
+  });
+}).on('dragleave dragend mouseout drop', function (e) {
+  $(".drop").css({
+    "border": "3px dashed #DADFE3",
+    "background": "transparent"
+  });
+  $(".cont").css({
+    "color": "#8E99A5"
+  });
+});
+function handleFileSelect(evt) {
+  var files = evt.target.files; // FileList object
+
+  // Loop through the FileList and render image files as thumbnails.
+  for (var i = 0, f; f = files[i]; i++) {
+
+    // Only process image files.
+    if (!f.type.match('image.*')) {
+      continue;
+    }
+
+    var reader = new FileReader();
+
+    // Closure to capture the file information.
+    reader.onload = (function(theFile) {
+      return function(e) {
+        // Render thumbnail.
+        var span = document.createElement('span');
+        span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                          '" title="', escape(theFile.name), '"/> <div class="hoverimg"><img src="{% static 'images/trash.png' %}"></div>'].join('');
+        
+        document.getElementById('list').insertBefore(span, null);
+      };
+    })(f);
+
+    // Read in the image file as a data URL.
+    reader.readAsDataURL(f);
+  }
+}
+
+$('#files').change(handleFileSelect);
+</script>
+
+<script>
+ $('.btnNext').click(function(){
+  $('.nav-tabs > .active').next('li').find('a').trigger('click');
+});
+
+  $('.btnPrevious').click(function(){
+  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+});
+</script>
+         
+<script>
+$(function() {
+  $("#vin").on("keyup blur", function() {
+    if (validateVin($("#vin").val())){
+$("#result").html(" VIN is Valid");
+var vin = $("#vin").val();
+
+$.ajax({
+              type: "POST",
+              url: "/vin-decoder/",
+              data: {'vin':vin, 'csrfmiddlewaretoken': "{{ csrf_token }}" } ,
+              success: function(response){
+                  //if request if made successfully then the response represent the data
+                  console.log(response);
+                  if(response.success==true){
+                      //Model
+                    
+                      var car_model = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["model"];
+                      var trim = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["trim"];
+                      var year = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["year"];
+                      var vehilce_make = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["make"];
+                      var body_type = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["body_type"];
+                      var drive_type = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["basic_data"]["drive_type"];
+                      var transmission = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["transmissions"][0]["name"];
+                      var engine = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["engines"][0]["name"];
+                      var fuel_type = response.data.query_responses["Request-Sample"]["us_market_data"]["common_us_data"]["engines"][0]["fuel_type"];
+                      
+                      $("#car-model").val(car_model);
+                      console.log("model",car_model)
+                      $("#body-type").val(body_type);
+                      console.log("body_type",body_type)
+                      $("#trim").val(trim);
+                      console.log("trim",trim)
+                      $("#year").val(year);
+                      console.log("year",year)
+                      $("#vehilce-make").val(vehilce_make);
+                      console.log("make",vehilce_make)
+                      $("#engine").val(engine);
+                      console.log("engine",engine)
+                      $("#drive-type").val(drive_type);
+                      console.log("drive_type",drive_type)
+                      $("#transmission").val(transmission);
+                      console.log("transmission",transmission)
+                      $("#fuel-type").val(fuel_type);
+                      console.log("fuel_type",fuel_type)
+
+                      
+                      console.log('successfuly login');
+                }
+                else{
+                  console.log('login failed');
+                  $('#loginerror-1').css('display', 'block');
+                }
+              }
+            });
+    }
+      
+      
+    else{
+$("#result").html(" VIN is not Valid");
+    }
+      
+  }).trigger("blur");
+});
+  
+function validateVin(vin) {
+  var re = new RegExp("^(?=.*[0-9])(?=.*[A-z])[0-9A-z-]{17}$");
+  return vin.match(re);
+} 
+</script> 
+
+<script>
+  var date= new Date();
+  console.log(date);
+    for(y =1947; y <= date.getFullYear()+1; y++) {
+            var optn = document.createElement("OPTION");
+            optn.text = y;
+            optn.value = y;
+            
+            // if the current year  selected
+            if (y === date.getFullYear()) {
+                optn.selected = true;
+            }
+            
+            document.getElementById('year').options.add(optn);
+    }
+    
+    function createNode(element) {
+      return document.createElement(element);
+  }
+
+</script>
+<script>
+vehicle_makes=["Acura","Alfa Romeo","Aston Martin","Audi","Bentley","BMW","Bugatti","Citroen","Chevrolet","DC","Datsun","Dodge","Ferrari","Fisker",
+"Ford","Force Motors","Haval","Hyundai","Honda","Hummer","ISUZU","Jaguar","Jeep","Kia","Koenigsegg","Lamborghini","Land Rover","Lexus","Lotus","Mahindra","MG Motor",
+"Mitsubishi","Maruti Suzuki","Maserati","Maybach","McLaren","Mercedes-Benz","MINI","Nissan","Pagani","Porsche","Rolls Royce","Renault","Spyker","Tata","Tesla","Toyota","Volkswagen","Volvo"]
+ 
+vehicle_makes.forEach(function(item){ 
+        {
+              var opt = document.createElement("OPTION");
+                
+               opt.text = item.toString(); 
+               opt.value =item.toString();
+
+                document.getElementById('vehilce-make').options.add(opt);
+
+                
+        }});
+</script>
+
+
+</body>
+</html>
+
+
